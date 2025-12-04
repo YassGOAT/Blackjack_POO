@@ -1,0 +1,148 @@
+🃏 Blackjack POO — Jeu de Blackjack en Python & Flask
+
+Bienvenue sur Blackjack POO, un jeu complet de Blackjack développé en Python Orienté Objet et rendu accessible sur le web grâce au framework Flask.
+
+Ce projet inclut un design moderne, deux modes de jeu, un historique, des animations, une gestion audio avancée et un déploiement professionnel via Render.
+
+🚀 Fonctionnalités
+🧠 Modes de jeu
+
+Mode Solo (vs Croupier)
+Jouez contre un croupier automatique avec une logique complète du Blackjack.
+
+Mode 2 Joueurs (local)
+Affrontez un ami sur le même appareil, chacun jouant son tour.
+
+🎨 Interface moderne
+
+Table de casino stylisée
+
+Cartes animées
+
+Interface responsive
+
+Effets visuels selon Victoire / Défaite / Égalité
+
+🔊 Gestion audio complète
+
+Musique de fond (loop)
+
+Sons d’action : tirage, clic, victoire, défaite
+
+Menu “Paramètres audio” :
+
+mute global
+
+volume individuel par type de son
+
+sauvegarde automatique via localStorage
+
+🧱 Architecture POO
+
+Classes propres et modulaires :
+
+Card
+
+Deck
+
+Hand
+
+BlackjackGame (solo)
+
+BlackjackGamePVP (2 joueurs)
+
+🌐 Démo en ligne
+
+🎮 Jouer ici :
+👉 https://blackjack-poo.onrender.com
+
+(Si différent, remplace par ton URL Render)
+
+📁 Structure du projet
+/
+├── app.py                 # Routing Flask et logique web
+├── blackjack.py           # Logique métier du jeu (POO)
+├── requirements.txt       # Dépendances Python
+├── Procfile               # Commande Gunicorn pour Render
+├── runtime.txt            # Version Python (optionnel)
+│
+├── templates/             # Pages HTML (Jinja2)
+│   ├── base.html
+│   ├── index.html
+│   ├── game.html
+│   └── game_pvp.html
+│
+└── static/
+    ├── css/
+    │   └── style.css
+    ├── js/
+    │   └── main.js
+    └── audio/
+        ├── bg.mp3
+        ├── card.mp3
+        ├── click.mp3
+        ├── lose.mp3
+        └── win.mp3
+
+▶️ Installation locale
+1️⃣ Cloner le projet
+git clone https://github.com/TON_PSEUDO/Blackjack_POO.git
+cd Blackjack_POO
+
+2️⃣ Installer les dépendances
+pip install -r requirements.txt
+
+3️⃣ Lancer le serveur local
+python app.py
+
+
+Le jeu sera accessible ici :
+
+👉 http://localhost:5000/
+
+🚀 Déploiement (Render)
+
+Pousser le projet sur GitHub
+
+Créer un Web Service sur Render
+
+Paramètres recommandés :
+
+Build Command
+
+pip install -r requirements.txt
+
+
+Start Command
+
+gunicorn app:app
+
+
+Activer Auto-Deploy (“On Commit”)
+
+Chaque git push met instantanément votre site à jour
+
+🧩 Améliorations possibles
+
+Mode multijoueur en ligne (WebSockets)
+
+Niveaux de difficulté du croupier
+
+Classement global
+
+Mode “tournoi”
+
+Système de compte utilisateur
+
+👨‍💻 Auteur
+
+YassGOAT
+Développeur Python & Web
+Projet réalisé pour portfolio et apprentissage POO/Flask
+
+📜 Licence
+
+Projet libre d’utilisation à des fins personnelles ou éducatives.
+Un crédit à l’auteur est apprécié.
+
+💬 Merci d’avoir testé Blackjack POO !
