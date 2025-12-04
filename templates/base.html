@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-result="{{ result|default('') }}">
+
+<div class="page">
+    <header class="header">
+        <div class="header-inner">
+            <h1 class="logo">Blackjack Casino</h1>
+            <nav class="nav">
+                <a href="{{ url_for('index') }}">Accueil</a>
+                <a href="{{ url_for('game_page') }}">Partie</a>
+                <a href="{{ url_for('game_pvp_page') }}">Partie 2 joueurs</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Bloc paramètres audio -->
+    <div class="audio-settings">
+        <button type="button" class="btn secondary settings-toggle" data-sound="click">
+            ⚙ Paramètres audio
+        </button>
+
+        <div class="settings-panel hidden">
+            <h3>Paramètres audio</h3>
+
+            <label class="settings-row">
+                <input type="checkbox" id="audio-mute">
+                Couper tous les sons
+            </label>
+
+            <div class="settings-group">
+                <label class="settings-row">
+                    Musique de fond
+                    <input type="range" class="audio-volume-slider" data-sound-key="bg" min="0" max="100">
+                </label>
+                <label class="settings-row">
+                    Clic interface
+                    <input type="range" class="audio-volume-slider" data-sound-key="click" min="0" max="100">
+                </label>
+                <label class="settings-row">
+                    Tirage de carte
+                    <input type="range" class="audio-volume-slider" data-sound-key="card" min="0" max="100">
+                </label>
+                <label class="settings-row">
+                    Son de victoire
+                    <input type="range" class="audio-volume-slider" data-sound-key="win" min="0" max="100">
+                </label>
+                <label class="settings-row">
+                    Son de défaite
+                    <input type="range" class="audio-volume-slider" data-sound-key="lose" min="0" max="100">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Projet perso – Python / Flask / Blackjack</p>
+    </footer>
+</div>
+
+<!-- Audio global -->
+<audio id="sfx-click" src="{{ url_for('static', filename='audio/click.mp3') }}"></audio>
+<audio id="sfx-card"  src="{{ url_for('static', filename='audio/card.mp3') }}"></audio>
+<audio id="sfx-win"   src="{{ url_for('static', filename='audio/win.mp3') }}"></audio>
+<audio id="sfx-lose"  src="{{ url_for('static', filename='audio/lose.mp3') }}"></audio>
+<audio id="music-bg"  src="{{ url_for('static', filename='audio/bg.mp3') }}" loop></audio>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

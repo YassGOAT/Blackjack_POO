@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="menu">
+    <h2>Bienvenue sur ton Blackjack</h2>
+    <p class="subtitle">Choisis ton mode de jeu et lance une partie.</p>
+
+    <!-- Mode contre le croupier -->
+    <div class="panel" style="margin-bottom: 1.5rem;">
+        <h3 style="text-align:left; margin-bottom:0.75rem;">Mode : contre le croupier</h3>
+        <p class="balance">
+            Solde actuel : <span>{{ balance }} €</span>
+        </p>
+
+        <form action="{{ url_for('start') }}" method="post" class="bet-form">
+            <label for="player_name">Nom du joueur</label>
+            <input
+                type="text"
+                id="player_name"
+                name="player_name"
+                placeholder="Ton pseudo"
+                value="{{ player_name }}"
+                maxlength="20"
+            >
+
+            <label for="bet">Mise</label>
+            <input
+                type="number"
+                id="bet"
+                name="bet"
+                min="1"
+                max="{{ balance }}"
+                required
+            >
+
+            <button type="submit" class="btn primary" id="start-btn" disabled>
+                Commencer une partie
+            </button>
+        </form>
+
+        <a href="{{ url_for('reset_balance') }}" class="btn secondary reset-btn">
+            Restaurer le solde
+        </a>
+
+        {% if error %}
+            <p class="message error">{{ error }}</p>
+        {% endif %}
+
+        <p class="subtitle" style="margin-top:1rem;">
+            Prochain croupier : <strong>{{ dealer_name }}</strong>
+        </p>
+    </div>
+
+    <!-- Mode 2 joueurs local -->
+    <div class="panel">
+        <h3 style="text-align:left; margin-bottom:0.75rem;">Mode : 2 joueurs (local)</h3>
+        <p class="subtitle" style="margin-bottom:0.75rem;">
+            Jouez à deux sur le même écran, chacun à son tour.
+        </p>
+
+        <form action="{{ url_for('start_pvp') }}" method="post" class="bet-form">
+            <label for="player1_name">Nom du joueur 1</label>
+            <input
+                type="text"
+                id="player1_name"
+                name="player1_name"
+                placeholder="Joueur 1"
+                value="{{ p1_name }}"
+                maxlength="20"
+            >
+
+            <label for="player2_name">Nom du joueur 2</label>
+            <input
+                type="text"
+                id="player2_name"
+                name="player2_name"
+                placeholder="Joueur 2"
+                value="{{ p2_name }}"
+                maxlength="20"
+            >
+
+            <button type="submit" class="btn primary" data-sound="click">
+                Lancer une partie 2 joueurs
+            </button>
+        </form>
+    </div>
+</section>
+{% endblock %}

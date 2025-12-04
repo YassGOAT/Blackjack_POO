@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="game-layout">
+    <!-- Sidebar historique -->
+    <aside class="history-panel">
+        <h3>Historique</h3>
+
+        {% if history and history|length > 0 %}
+            <ul class="history-list">
+                {% for h in history %}
+                    <li class="history-item history-{{ h.result|lower }}">
+                        <div class="history-header">
+                            <span class="result">{{ h.result }}</span>
+                            <span class="bet">Mise : {{ h.bet }} €</span>
+                        </div>
+                        <div class="history-body">
+                            <span class="line">
+                                Toi : {{ h.player_score }} /
+                                {{ h.dealer_name }} : {{ h.dealer_score }}
+                            </span>
+                            <span class="line small">
+                                Solde après : {{ h.balance_after }} €
+                            </span>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="history-empty">Aucune partie jouée pour l’instant.</p>
+        {% endif %}
+    </aside>
+
+    <!-- Zone de jeu principale -->
+    <section class="game
+    {% if finished %} game-finished{% endif %}
+    {% if finished and result == 'Victoire' %} game-win{% endif %}
+    {% if finished and result == 'Défaite' %} game-lose{% endif %}
+    {% if finished and result == 'Égalité' %} game-draw{% endif %}
+    ">
+        <div class="top-bar">
+            <div>Joueur : <span>{{ player_name }}</span></div>
+            <div>Croupier : <span>{{ dealer_name }}</span></div>
+            <div>Solde : <span>{{ balance }} €</span></div>
+            <div>Mise : <span>{{ bet }} €</span></div>
+        </div>
+
+        <div class="table">
+            <!-- Main du croupier -->
+            <div class="hand dealer">
+                <h3>Croupier : {{ dealer_name }}</h3>
+                <div class="cards">
+                    {% if not finished %}
+                        {% if dealer_hand.cards %}
+                            <div class="card {% if dealer_hand.cards[0].suit in ['Cœur','Carreau'] %}red{% endif %}">
+                                <span class="value">{{ dealer_hand.cards[0].value }}</span>
+                                <span class="suit">
+                                    {% if dealer_hand.cards[0].suit == 'Pique' %}♠
+                                    {% elif dealer_hand.cards[0].suit == 'Trèfle' %}♣
+                                    {% elif dealer_hand.cards[0].suit == 'Carreau' %}♦
+                                    {% elif dealer_hand.cards[0].suit == 'Cœur' %}♥
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="card back">
+                                <span class="value">?</span>
+                            </div>
+                        {% else %}
+                            <p>Aucune carte</p>
+                        {% endif %}
+                    {% else %}
+                        {% for card in dealer_hand.cards %}
+                            <div class="card {% if card.suit in ['Cœur','Carreau'] %}red{% endif %}">
+                                <span class="value">{{ card.value }}</span>
+                                <span class="suit">
+                                    {% if card.suit == 'Pique' %}♠
+                                    {% elif card.suit == 'Trèfle' %}♣
+                                    {% elif card.suit == 'Carreau' %}♦
+                                    {% elif card.suit == 'Cœur' %}♥
+                                    {% endif %}
+                                </span>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                {% if finished %}
+                    <p class="score">Score : {{ dealer_score }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Main du joueur -->
+            <div class="hand player">
+                <h3>Joueur : {{ player_name }}</h3>
+                <div class="cards">
+                    {% for card in player_hand.cards %}
+                        <div class="card {% if card.suit in ['Cœur','Carreau'] %}red{% endif %}">
+                            <span class="value">{{ card.value }}</span>
+                            <span class="suit">
+                                {% if card.suit == 'Pique' %}♠
+                                {% elif card.suit == 'Trèfle' %}♣
+                                {% elif card.suit == 'Carreau' %}♦
+                                {% elif card.suit == 'Cœur' %}♥
+                                {% endif %}
+                            </span>
+                        </div>
+                    {% endfor %}
+                </div>
+                <p class="score">Score : {{ player_score }}</p>
+            </div>
+        </div>
+
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+
+        {% if not finished %}
+            <div class="actions">
+                <a class="btn primary" href="{{ url_for('hit') }}" data-sound="card">Tirer</a>
+                <a class="btn secondary" href="{{ url_for('stand') }}" data-sound="click">Rester</a>
+            </div>
+        {% else %}
+            <div class="actions">
+                <a class="btn primary" href="{{ url_for('index') }}" data-sound="click">Nouvelle manche</a>
+            </div>
+        {% endif %}
+
+    </section>
+</section>
+
+{% endblock %}
